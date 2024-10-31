@@ -9,7 +9,7 @@ function App() {
   const todoList = [
     { id: 1, title: "Complete assignment" },
     { id: 2, title: "Treat yourself" },
-    { id: 3, title: "Watch funny videos" },
+    { id: 3, title: "Go to sleep" },
   ];
 
   return (
