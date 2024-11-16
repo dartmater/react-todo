@@ -10,13 +10,13 @@ const todoList = [
 
 function TodoList() {
   return (
-    <>
+    <div>
       <ul>
         {todoList.map((todo) => (
           <li key={todo.id}>{todo.title}</li>
         ))}
       </ul>
-    </>
+    </div>
   );
 }
 export default TodoList;
