@@ -5,14 +5,13 @@ import "./App.css";
 import TodoList from "./TodoList";
 import AddTodoForm from "./AddTodoForm";
 
-
 function App() {
   // Define the todo list array
 
   return (
     <div>
       <h1>Todo List</h1>
-      <AddTodoForm/>
+      <AddTodoForm />
       <TodoList />
     </div>
   );
