@@ -6,17 +6,17 @@ import TodoList from "./TodoList";
 import AddTodoForm from "./AddTodoForm";
 
 function App() {
-  // Define the todo list array
-  const [newTodo, setNewTodo] = useState("");
-  const handleAddTodo = (todoTitle) => {
-    setNewTodo(todoTitle);
-  }
+  const [todoList, setTodoList] = useState([]);
+
+  const addTodo = (newTodo) => {
+    setTodoList([...todoList, newTodo]);
+  };
+
   return (
     <div>
       <h1>Todo List</h1>
-      <AddTodoForm onAddTodo={handleAddTodo}/>
-      <p>{newTodo}</p>
-      <TodoList />
+      <AddTodoForm onAddTodo={addTodo} />
+      <TodoList todoList={todoList} />
     </div>
   );
 }
