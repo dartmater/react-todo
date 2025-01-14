@@ -3,6 +3,8 @@ import "./App.css";
 import TodoList from "./TodoList";
 import AddTodoForm from "./AddTodoForm";
 
+
+
 // function useSemiPersistentState(key, initialValue) {
 //   const [value, setValue] = useState(() => {
 //     const savedValue = localStorage.getItem(key);
@@ -16,25 +18,40 @@ import AddTodoForm from "./AddTodoForm";
 function App() {
   const [todoList, setTodoList] = useState(() => {
     const savedTodoList = localStorage.getItem("savedTodoList");
-    return savedTodoList !== null && savedTodoList !== "undefined"
-      ? JSON.parse(savedTodoList)
-      : [];
+    return savedTodoList !== null ? JSON.parse(savedTodoList) : [];
   });
 
   const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve({
-          data: {
-            todoList: JSON.parse(localStorage.getItem("savedTodoList") || "[]"),
-          },
-        });
-      }, 2000);
-    }).then((result) => {
-      setTodoList(result.data.todoList);
+
+  const fetchData = async () => {
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_TOKEN}`,
+      },
+    };
+    const url = `https://api.airtable.com/v0/${
+      import.meta.env.VITE_AIRTABLE_BASE_ID
+    }/${import.meta.env.VITE_TABLE_NAME}`;
+    try {
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+      const data = await response.json();
+      const todos = data.records.map((todo) => ({
+        title: todo.fields.title,
+        id: todo.id,
+      }));
+      setTodoList(todos);
       setIsLoading(false);
-    });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -62,3 +79,4 @@ function App() {
 }
 
 export default App;
+
