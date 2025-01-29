@@ -50,8 +50,8 @@ function App() {
   }, []);
 
   const addTodo = (newTodo) => {
-    if (!newTodo.title) {
-      return; // not empty
+    if (newTodo.title.trim() === "") {
+      return; // no empty todos
     }
     const newTodoList = [...todoList, newTodo];
     setTodoList(newTodoList);
