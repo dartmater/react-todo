@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import TodoList from "./TodoList";
 import AddTodoForm from "./AddTodoForm";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import DropdownMenu from "./DropdownMenu";
+import "./App.css";
 
 // function useSemiPersistentState(key, initialValue) {
 //   const [value, setValue] = useState(() => {
@@ -28,6 +29,7 @@ function App() {
     const url = `https://api.airtable.com/v0/${
       import.meta.env.VITE_AIRTABLE_BASE_ID
     }/${import.meta.env.VITE_TABLE_NAME}`;
+
     try {
       const response = await fetch(url, options);
       if (!response.ok) {
@@ -35,13 +37,14 @@ function App() {
       }
       const data = await response.json();
       const todos = data.records.map((todo) => ({
-        title: todo.fields.title,
+        title: todo.fields.Title,
         id: todo.id,
       }));
       setTodoList(todos);
-      setIsLoading(false);
     } catch (error) {
       console.log(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -50,11 +53,8 @@ function App() {
   }, []);
 
   const addTodo = (newTodo) => {
-    if (newTodo.title.trim() === "") {
-      return; // no empty todos
-    }
-    const newTodoList = [...todoList, newTodo];
-    setTodoList(newTodoList);
+    if (newTodo.title.trim() === "") return;
+    setTodoList([...todoList, newTodo]);
   };
 
   const removeTodo = (id) => {
@@ -64,25 +64,29 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <div>
-              <h1>Todo List</h1>
-              {isLoading ? (
-                <p>Loading...</p>
-              ) : (
-                <>
-                  <AddTodoForm onAddTodo={addTodo} />
-                  <TodoList todoList={todoList} onRemoveTodo={removeTodo} />
-                </>
-              )}
-            </div>
-          }
-        />
-        <Route path="/new" element={<h1>New Todo List</h1>} />
-      </Routes>
+      <div className="app">
+        <DropdownMenu />
+
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <div>
+                <h1>Todo List</h1>
+                {isLoading ? (
+                  <p>Loading...</p>
+                ) : (
+                  <>
+                    <AddTodoForm onAddTodo={addTodo} />
+                    <TodoList todoList={todoList} onRemoveTodo={removeTodo} />
+                  </>
+                )}
+              </div>
+            }
+          />
+          <Route path="/new" element={<h1>New Todo List</h1>} />
+        </Routes>
+      </div>
     </BrowserRouter>
   );
 }
