@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import TodoList from "./TodoList/TodoList";
-import AddTodoForm from "./AddTodoForm/AddTodoForm";
-import DropdownMenu from "./DropdownMenu/DropdownMenu";
+import TodoList from "./components/TodoList/TodoList";
+import AddTodoForm from "./components/AddTodoForm/AddTodoForm";
+import DropdownMenu from "./components/DropdownMenu/DropdownMenu";
 import "./App.css";
 
 // function useSemiPersistentState(key, initialValue) {

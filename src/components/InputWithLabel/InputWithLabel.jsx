@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import styles from "./InputWithLabel.module.css";
+import PropTypes from "prop-types";
 
 const InputWithLabel = (props) => {
   const inputRef = useRef();
@@ -8,7 +9,9 @@ const InputWithLabel = (props) => {
   }, []);
   return (
     <>
-      <label htmlFor="todoTitle" className={styles.label}>{props.children}</label>
+      <label htmlFor="todoTitle" className={styles.label}>
+        {props.children}
+      </label>
 
       <input
         ref={inputRef}
@@ -22,4 +25,8 @@ const InputWithLabel = (props) => {
   );
 };
 
+InputWithLabel.propTypes = {
+  todoTitle: PropTypes.string.isRequired,
+  handleTitleChange: PropTypes.func.isRequired,
+};
 export default InputWithLabel;
