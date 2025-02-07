@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import InputWithLabel from "./InputWithLabel";
+import InputWithLabel from "../InputWithLabel/InputWithLabel";
+import styles from "./AddTodoForm.module.css";
+import PropTypes from "prop-types";
 
 function AddTodoForm({ onAddTodo }) {
   const [todoTitle, setTodoTitle] = useState("");
@@ -10,7 +12,7 @@ function AddTodoForm({ onAddTodo }) {
 
   const handleAddTodo = (event) => {
     event.preventDefault();
-  
+
     onAddTodo({ title: todoTitle, id: Date.now() });
     setTodoTitle("");
   };
@@ -23,11 +25,15 @@ function AddTodoForm({ onAddTodo }) {
         Title
       </InputWithLabel>
 
-      <button className="btn" type="submit">
+      <button className={styles.addButton} type="submit">
         Add
       </button>
     </form>
   );
 }
+
+AddTodoForm.propTypes = {
+  onAddTodo: PropTypes.func.isRequired,
+};
 
 export default AddTodoForm;
