@@ -2,3 +2,10 @@
   color: #252891; 
   margin-right: 10px; 
 }
+
+.input {
+  width: 51%;
+  padding: 8px;
+  border: 1px solid #e105a2;
+  border-radius: 5px;
+}

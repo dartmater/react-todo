@@ -1,7 +1,7 @@
 .sortButton {
   background-color: transparent; /* Transparent background */
-  border: 2px solid #e105a2; 
-  outline:none;
+  border: 2px solid #e105a2;
+  outline: none;
   color: #252891; /* Text color matching header text */
   padding: 8px 16px;
   border-radius: 5px;
@@ -9,12 +9,11 @@
   font-size: 1em;
   font-weight: 500;
   transition: background-color 0.3s ease, color 0.3s ease;
-  margin: 10px 0; 
+  margin: 10px 0;
 }
 
 .sortButton:hover {
-  background-color: #252891; 
-  color: #e105a2; 
-  border-color:#252891;
+  background-color: #3d41b7;
+  color: #f30cb1;
+  border-color: #252891;
 }
-

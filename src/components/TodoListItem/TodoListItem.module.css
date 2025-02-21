@@ -8,6 +8,30 @@
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 5px;
+  background-color: #f9f9f9; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+.checkmarkContainer {
+  display: flex;
+  align-items: center;
+}
+
+.checkmark {
+  cursor: pointer;
+  filter: invert(0%);
+  height: 40px;
+  margin-right: 10px; 
+}
+
+.checkmarkCompleted {
+  filter: invert(21%) sepia(47%) saturate(7473%) hue-rotate(229deg) brightness(95%) contrast(90%);
+}
+
+.todoCompleted {
+  text-decoration: line-through;
+  text-decoration-color: #252891;
+  color: inherit;
 }
 
 .removeButton {
@@ -17,45 +41,58 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  border: 1px solid #252891; 
+  background-color: transparent; 
 }
 
 .removeButton:hover {
-  border-color: #c40990;
+  background-color: #252891; 
+  color:#c40990; 
+  border-color: #252891;
 }
 
 /* Mobile Devices (up to 600px) */
 @media (max-width: 600px) {
   .ListItem {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: column; 
+    align-items: flex-start; 
+  }
+
+  .checkmarkContainer {
+    width: 100%; 
+    margin-bottom: 10px; 
+  }
+
+  .checkmark {
+    margin-right: 10px; 
   }
 
   .removeButton {
-    margin-left: 0;
-    margin-top: 10px;
-    width: 100%;
-    text-align: center;
+    margin-left: 0; 
+    margin-top: 10px; 
+    width: 100%; 
+    text-align: center; 
   }
 }
 
 /* Tablets (601px to 900px) */
 @media (min-width: 601px) and (max-width: 900px) {
   .ListItem {
-    padding: 15px;
+    padding: 15px; 
   }
 
   .removeButton {
-    padding: 8px 15px;
+    padding: 8px 15px; 
   }
 }
 
 /* Desktops (901px and above) */
 @media (min-width: 901px) {
   .ListItem {
-    padding: 20px;
+    padding: 20px; 
   }
 
   .removeButton {
-    padding: 10px 20px;
+    padding: 10px 20px; 
   }
 }

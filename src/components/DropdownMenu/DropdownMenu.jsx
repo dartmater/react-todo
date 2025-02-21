@@ -20,12 +20,14 @@ const DropdownMenu = () => {
       <ul className={`${styles.dropdownList} ${isOpen ? styles.open : ""}`}>
         <li>
           <NavLink to="/" className={styles.navLink}>
-            Home
+            Todo List
           </NavLink>
         </li>
         <li>
-          <NavLink to="/todo" className={styles.navLink}>
-            Todo List
+          <NavLink to="/calendar" className={styles.navLink}>
+            {" "}
+            {/* Updated to match the route in App.js */}
+            Calendar
           </NavLink>
         </li>
       </ul>

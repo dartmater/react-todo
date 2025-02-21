@@ -12,7 +12,8 @@ const SortButton = ({ sortOrder, handleSortOrder }) => {
 
 SortButton.propTypes = {
   sortOrder: PropTypes.oneOf(["asc", "desc"]).isRequired,
-  toggleSortOrder: PropTypes.func.isRequired,
+  handleSortOrder: PropTypes.func.isRequired,
 };
+
 
 export default SortButton;
