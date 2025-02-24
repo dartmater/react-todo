@@ -24,10 +24,9 @@ const DropdownMenu = () => {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/calendar" className={styles.navLink}>
+          <NavLink to="/completed" className={styles.navLink}>
             {" "}
-            {/* Updated to match the route in App.js */}
-            Calendar
+            Completed
           </NavLink>
         </li>
       </ul>

@@ -4,7 +4,7 @@ import TodoList from "./components/TodoList/TodoList";
 import AddTodoForm from "./components/AddTodoForm/AddTodoForm";
 import DropdownMenu from "./components/DropdownMenu/DropdownMenu";
 import SortButton from "./components/SortButton/SortButton";
-import CalendarComponent from "./components/CalendarPage/CalendarPage"; // Import the CalendarComponent
+import CompletedTasks from "./components/CompletedTasks/CompletedTasks";
 import "./App.css";
 
 function App() {
@@ -34,6 +34,7 @@ function App() {
       const todos = data.records.map((todo) => ({
         title: todo.fields.Title,
         id: todo.id,
+        completed: todo.fields.Completed || false,
       }));
       setTodoList(todos);
     } catch (error) {
@@ -57,6 +58,7 @@ function App() {
       body: JSON.stringify({
         fields: {
           Title: newTodo.title,
+          Completed: false,
         },
       }),
     };
@@ -73,6 +75,7 @@ function App() {
       const createdTodo = {
         title: data.fields.Title,
         id: data.id,
+        completed: data.fields.Completed || false,
       };
       setTodoList([...todoList, createdTodo]);
     } catch (error) {
@@ -145,7 +148,7 @@ function App() {
                     />
                     <hr className="line" />
                     <TodoList
-                      todoList={todoList}
+                      todoList={todoList.filter((todo) => !todo.completed)}
                       onRemoveTodo={removeTodo}
                       onToggleComplete={handleToggleComplete}
                     />
@@ -155,8 +158,10 @@ function App() {
             }
           />
           <Route path="/new" element={<h1>New Todo List</h1>} />
-          <Route path="/calendar" element={<CalendarComponent />} />{" "}
-          
+          <Route
+            path="/completed"
+            element={<CompletedTasks todoList={todoList} />}
+          />
         </Routes>
       </div>
     </BrowserRouter>

@@ -4,11 +4,12 @@ import checkmark from "../../assets/checkmark.png";
 import PropTypes from "prop-types";
 
 const TodoListItem = ({ todo, onRemoveTodo, onToggleComplete }) => {
-  const [completed, setCompleted] = useState(false);
+  const [completed, setCompleted] = useState(todo.completed);
 
-  const handleToggleComplete = () => {
-    setCompleted(!completed);
-    onToggleComplete(todo.id);
+  const handleToggleComplete = async() => {
+    const newCompleted = !completed;
+    setCompleted(newCompleted);
+    onToggleComplete(todo.id, newCompleted);
   };
 
   return (
