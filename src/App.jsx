@@ -5,6 +5,7 @@ import AddTodoForm from "./components/AddTodoForm/AddTodoForm";
 import DropdownMenu from "./components/DropdownMenu/DropdownMenu";
 import SortButton from "./components/SortButton/SortButton";
 import CompletedTasks from "./components/CompletedTasks/CompletedTasks";
+import Footer from "./components/Footer/Footer";
 import "./App.css";
 
 function App() {
@@ -163,6 +164,7 @@ function App() {
             element={<CompletedTasks todoList={todoList} />}
           />
         </Routes>
+        <Footer />
       </div>
     </BrowserRouter>
   );
