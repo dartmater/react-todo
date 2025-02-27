@@ -7,7 +7,6 @@ const DropdownMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => {
-    console.log("toggleDropdown", isOpen);
     setIsOpen(!isOpen);
   };
 
@@ -20,12 +19,13 @@ const DropdownMenu = () => {
       <ul className={`${styles.dropdownList} ${isOpen ? styles.open : ""}`}>
         <li>
           <NavLink to="/" className={styles.navLink}>
-            Home
+            Todo List
           </NavLink>
         </li>
         <li>
-          <NavLink to="/todo" className={styles.navLink}>
-            Todo List
+          <NavLink to="/completed" className={styles.navLink}>
+            {" "}
+            Completed
           </NavLink>
         </li>
       </ul>
