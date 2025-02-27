@@ -12,6 +12,7 @@ function App() {
   const [todoList, setTodoList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [sortOrder, setSortOrder] = useState("asc");
+  const [error, setError] = useState(null);
 
   const fetchData = async () => {
     const options = {
@@ -32,6 +33,7 @@ function App() {
         throw new Error(`Error: ${response.status}`);
       }
       const data = await response.json();
+
       const todos = data.records.map((todo) => ({
         title: todo.fields.Title,
         id: todo.id,
@@ -40,6 +42,7 @@ function App() {
       setTodoList(todos);
     } catch (error) {
       console.log(error.message);
+      setError(error.message);
     } finally {
       setIsLoading(false);
     }
@@ -69,10 +72,12 @@ function App() {
 
     try {
       const response = await fetch(url, options);
+      const data = await response.json();
+
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
       }
-      const data = await response.json();
+
       const createdTodo = {
         title: data.fields.Title,
         id: data.id,
@@ -81,6 +86,7 @@ function App() {
       setTodoList([...todoList, createdTodo]);
     } catch (error) {
       console.log(error.message);
+      setError(error.message);
     }
   };
 
@@ -104,6 +110,7 @@ function App() {
       setTodoList(newTodoList);
     } catch (error) {
       console.log(error.message);
+      setError(error.message);
     }
   };
 
@@ -120,11 +127,38 @@ function App() {
     setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
   };
 
-  const handleToggleComplete = (id) => {
+  const handleToggleComplete = async (id, newCompleted) => {
     const updatedTodos = todoList.map((todo) =>
-      todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      todo.id === id ? { ...todo, completed: newCompleted } : todo
     );
     setTodoList(updatedTodos);
+
+    const options = {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fields: {
+          Completed: newCompleted,
+        },
+      }),
+    };
+
+    const url = `https://api.airtable.com/v0/${
+      import.meta.env.VITE_AIRTABLE_BASE_ID
+    }/${import.meta.env.VITE_TABLE_NAME}/${id}`;
+
+    try {
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      console.log(error.message);
+      setError(error.message);
+    }
   };
 
   return (
@@ -139,6 +173,8 @@ function App() {
                 <h1>Todo List</h1>
                 {isLoading ? (
                   <p>Loading...</p>
+                ) : error ? (
+                  <p>Error: {error}</p>
                 ) : (
                   <>
                     <AddTodoForm onAddTodo={addTodo} />
@@ -161,7 +197,13 @@ function App() {
           <Route path="/new" element={<h1>New Todo List</h1>} />
           <Route
             path="/completed"
-            element={<CompletedTasks todoList={todoList} />}
+            element={
+              <CompletedTasks
+                todoList={todoList}
+                onRemoveTodo={removeTodo}
+                onToggleComplete={handleToggleComplete}
+              />
+            }
           />
         </Routes>
         <Footer />

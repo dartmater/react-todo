@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 const TodoListItem = ({ todo, onRemoveTodo, onToggleComplete }) => {
   const [completed, setCompleted] = useState(todo.completed);
 
-  const handleToggleComplete = async() => {
+  const handleToggleComplete = async () => {
     const newCompleted = !completed;
     setCompleted(newCompleted);
     onToggleComplete(todo.id, newCompleted);
@@ -45,6 +45,7 @@ TodoListItem.propTypes = {
   todo: PropTypes.shape({
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
+    completed: PropTypes.bool.isRequired,
   }).isRequired,
   onRemoveTodo: PropTypes.func.isRequired,
   onToggleComplete: PropTypes.func.isRequired,
